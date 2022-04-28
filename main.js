@@ -9,7 +9,6 @@
 // @description  Display when a Youtube video will finish!
 // @author       Dylan O'Connor (https://github.com/dylanoconnor2)
 // @match        https://www.youtube.com/watch?v=*
-// @run-at       document-start
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
 // @grant        none
 // ==/UserScript==
