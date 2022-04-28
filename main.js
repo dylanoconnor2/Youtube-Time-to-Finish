@@ -1,43 +1,61 @@
-function HMStoSeconds(HMS = new String()) {
-    const Array = HMS.split(":");
+// ==UserScript==
+// @name         Youtube Time to Finish
+// @namespace    https://github.com/dylanoconnor2/Youtube-Time-to-Finish
+// @supportURL   https://github.com/dylanoconnor2/Youtube-Time-to-Finish/issues
+// @updateURL    https://raw.githubusercontent.com/dylanoconnor2/Youtube-Time-to-Finish/main/main.js
+// @downloadURL  https://raw.githubusercontent.com/dylanoconnor2/Youtube-Time-to-Finish/main/main.js
+// @license      MIT
+// @version      1.0.0
+// @description  Display when a Youtube video will finish!
+// @author       Dylan O'Connor (https://github.com/dylanoconnor2)
+// @match        https://www.youtube.com/watch?v=*
+// @run-at       document-start
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
+// @grant        none
+// ==/UserScript==
 
-    if (Array.length == 3) return +Array[0] * 60 * 60 + +Array[1] * 60 + +Array[2];
-    if (Array.length == 2) return +Array[0] * 60 + +Array[1];
-    if (Array.length == 1) return +Array[0];
-    return null;
-}
+(function () {
+    function HMStoSeconds(HMS = new String()) {
+        const Array = HMS.split(":");
 
-function addTextNode(node = new Node(), text = new String()) {
-    const TextNode = document.createTextNode(text);
-    node.appendChild(TextNode);
-}
-
-const CurrentTime = document.querySelector(".ytp-time-current");
-
-const Span = document.createElement("span");
-Span.setAttribute("id", "yt-end-time");
-CurrentTime.parentNode.appendChild(Span);
-
-const SpanNode = document.querySelectorAll("#yt-end-time")[0];
-addTextNode(SpanNode, " Ends At: ");
-
-const Observer = new MutationObserver(function (mutationsList, observer) {
-    for (const mutation of mutationsList) {
-        if (mutation.type == "childList" && mutation.addedNodes.length == 1) {
-            const NewTime = mutation.addedNodes[0].data;
-            const DurationTime = document.querySelector(".ytp-time-duration").innerText;
-
-            const TimeDifference = HMStoSeconds(DurationTime) - HMStoSeconds(NewTime);
-            const CurrentDate = Date.now();
-
-            const FutureTime = Math.ceil((CurrentDate + TimeDifference * 1000) / 1000) * 1000;
-
-            SpanNode.removeChild(SpanNode.firstChild);
-            addTextNode(SpanNode, " Ends At: " + new Date(FutureTime).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }));
-        }
+        if (Array.length == 3) return +Array[0] * 60 * 60 + +Array[1] * 60 + +Array[2];
+        if (Array.length == 2) return +Array[0] * 60 + +Array[1];
+        if (Array.length == 1) return +Array[0];
+        return null;
     }
-});
 
-Observer.observe(CurrentTime, {
-    childList: true,
-});
+    function addTextNode(node = new Node(), text = new String()) {
+        const TextNode = document.createTextNode(text);
+        node.appendChild(TextNode);
+    }
+
+    const CurrentTime = document.querySelector(".ytp-time-current");
+
+    const Span = document.createElement("span");
+    Span.setAttribute("id", "yt-end-time");
+    CurrentTime.parentNode.appendChild(Span);
+
+    const SpanNode = document.querySelectorAll("#yt-end-time")[0];
+    addTextNode(SpanNode, " Ends At: ");
+
+    const Observer = new MutationObserver(function (mutationsList, observer) {
+        for (const mutation of mutationsList) {
+            if (mutation.type == "childList" && mutation.addedNodes.length == 1) {
+                const NewTime = mutation.addedNodes[0].data;
+                const DurationTime = document.querySelector(".ytp-time-duration").innerText;
+
+                const TimeDifference = HMStoSeconds(DurationTime) - HMStoSeconds(NewTime);
+                const CurrentDate = Date.now();
+
+                const FutureTime = Math.ceil((CurrentDate + TimeDifference * 1000) / 1000) * 1000;
+
+                SpanNode.removeChild(SpanNode.firstChild);
+                addTextNode(SpanNode, " Ends At: " + new Date(FutureTime).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }));
+            }
+        }
+    });
+
+    Observer.observe(CurrentTime, {
+        childList: true,
+    });
+})();
