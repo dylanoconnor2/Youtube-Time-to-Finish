@@ -2,8 +2,8 @@
 // @name         Youtube Time to Finish
 // @namespace    https://github.com/dylanoconnor2/Youtube-Time-to-Finish
 // @supportURL   https://github.com/dylanoconnor2/Youtube-Time-to-Finish/issues
-// @updateURL    https://raw.githubusercontent.com/dylanoconnor2/Youtube-Time-to-Finish/main/main.js
-// @downloadURL  https://raw.githubusercontent.com/dylanoconnor2/Youtube-Time-to-Finish/main/main.js
+// @updateURL    https://raw.githubusercontent.com/dylanoconnor2/Youtube-Time-to-Finish/main/time-to-finish.userscript.js
+// @downloadURL  https://raw.githubusercontent.com/dylanoconnor2/Youtube-Time-to-Finish/main/time-to-finish.userscript.js
 // @license      MIT
 // @version      1.0.0
 // @description  Display when a Youtube video will finish!
