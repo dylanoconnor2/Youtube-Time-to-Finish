@@ -15,11 +15,11 @@ function addTextNode(node = new Node(), text = new String()) {
 const CurrentTime = document.querySelector(".ytp-time-current");
 
 const Span = document.createElement("span");
-Span.setAttribute("id", "yt-end-time")
+Span.setAttribute("id", "yt-end-time");
 CurrentTime.parentNode.appendChild(Span);
 
 const SpanNode = document.querySelectorAll("#yt-end-time")[0];
-addTextNode(SpanNode, " Ends At: ")
+addTextNode(SpanNode, " Ends At: ");
 
 const Observer = new MutationObserver(function (mutationsList, observer) {
     for (const mutation of mutationsList) {
@@ -33,7 +33,7 @@ const Observer = new MutationObserver(function (mutationsList, observer) {
             const FutureTime = Math.ceil((CurrentDate + TimeDifference * 1000) / 1000) * 1000;
 
             SpanNode.removeChild(SpanNode.firstChild);
-            addTextNode(SpanNode, " Ends At: " + new Date(FutureTime).toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit' }));
+            addTextNode(SpanNode, " Ends At: " + new Date(FutureTime).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }));
         }
     }
 });
