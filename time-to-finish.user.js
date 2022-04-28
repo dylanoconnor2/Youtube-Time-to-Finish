@@ -4,7 +4,7 @@
 // @downloadURL  https://gist.githubusercontent.com/dylanoconnor2/f5ad56fb8b6a5b1c84b6a5e9edf6fe41/raw/time-to-finish.user.js
 // @updateURL    https://gist.githubusercontent.com/dylanoconnor2/f5ad56fb8b6a5b1c84b6a5e9edf6fe41/raw/time-to-finish.user.js
 // @license      MIT
-// @version      1.1.0
+// @version      1.1.2
 // @description  Display when a Youtube video will finish!
 // @author       Dylan O'Connor (https://github.com/dylanoconnor2)
 // @match        https://www.youtube.com/watch?v=*&t=*
