@@ -12,50 +12,36 @@
 // @grant        none
 // ==/UserScript==
 
-function HMStoSeconds(HMS = new String()) {
-    const Array = HMS.split(":");
-
-    if (Array.length == 3) return +Array[0] * 60 * 60 + +Array[1] * 60 + +Array[2];
-    if (Array.length == 2) return +Array[0] * 60 + +Array[1];
-    if (Array.length == 1) return +Array[0];
-    return null;
-}
-
 function addTextNode(node = new Node(), text = new String()) {
     const TextNode = document.createTextNode(text);
     node.appendChild(TextNode);
 }
 
-(function () {
-    document.addEventListener("DOMContentLoaded", () => {
-        const CurrentTime = document.querySelector(".ytp-time-current");
+const CurrentTime = document.querySelector(".ytp-time-current");
 
-        const Span = document.createElement("span");
-        Span.setAttribute("id", "yt-end-time");
-        CurrentTime.parentNode.appendChild(Span);
+const Span = document.createElement("span");
+Span.setAttribute("id", "yt-end-time");
 
-        const SpanNode = document.querySelectorAll("#yt-end-time")[0];
-        addTextNode(SpanNode, " Ends At: ");
+CurrentTime.parentNode.appendChild(Span);
 
-        const Observer = new MutationObserver(function (mutationsList, observer) {
-            for (const mutation of mutationsList) {
-                if (mutation.type == "childList" && mutation.addedNodes.length == 1) {
-                    const NewTime = mutation.addedNodes[0].data;
-                    const DurationTime = document.querySelector(".ytp-time-duration").innerText;
+const SpanNode = document.querySelectorAll("#yt-end-time")[0];
 
-                    const TimeDifference = HMStoSeconds(DurationTime) - HMStoSeconds(NewTime);
-                    const CurrentDate = Date.now();
+setInterval(() => {
+    const VideoPlayer = document.querySelector(".html5-video-container > video");
 
-                    const FutureTime = Math.ceil((CurrentDate + TimeDifference * 1000) / 1000) * 1000;
+    if (VideoPlayer == null) return;
 
-                    SpanNode.removeChild(SpanNode.firstChild);
-                    addTextNode(SpanNode, " Ends At: " + new Date(FutureTime).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }));
-                }
-            }
-        });
+    const NewTime = VideoPlayer.currentTime;
+    const Duration = VideoPlayer.duration;
 
-        Observer.observe(CurrentTime, {
-            childList: true,
-        });
-    });
-})();
+    const TimeDifference = Duration - NewTime;
+    const CurrentDate = Date.now();
+
+    const FutureTime = Math.ceil((CurrentDate + TimeDifference * 1000) / 1000) * 1000;
+
+    if (SpanNode.firstChild) {
+        SpanNode.removeChild(SpanNode.firstChild);
+    }
+
+    addTextNode(SpanNode, " Ends At: " + new Date(FutureTime).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }));
+}, 100);
