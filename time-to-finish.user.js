@@ -7,6 +7,7 @@
 // @version      1.1.2
 // @description  Display when a Youtube video will finish!
 // @author       Dylan O'Connor (https://github.com/dylanoconnor2)
+// @match        https://www.youtube.com/watch?v=*
 // @match        https://www.youtube.com/watch?v=*&t=*
 // @grant        none
 // ==/UserScript==
