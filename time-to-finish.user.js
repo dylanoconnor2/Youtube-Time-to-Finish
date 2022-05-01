@@ -44,4 +44,4 @@ setInterval(() => {
     }
 
     addTextNode(SpanNode, " Ends At: " + new Date(FutureTime).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }));
-}, 100);
+}, 1000);
